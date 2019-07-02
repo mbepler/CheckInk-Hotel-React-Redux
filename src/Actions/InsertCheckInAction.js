@@ -19,7 +19,7 @@ export const setDateOut = (value) => {
 export const setGuest= (value) => {
     return {
         type: 'SET_GUEST',
-        payload: value.target.value
+        payload: value
     }
 }
 

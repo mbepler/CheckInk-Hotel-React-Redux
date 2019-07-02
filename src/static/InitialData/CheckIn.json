@@ -1,0 +1,83 @@
+{ "CheckIn" :   [
+    {
+        "dataEntrada" : "2019-04-23T05:00:00",
+        "dataSaida":"2019-04-30T19:17:00",
+        "adicionalVeiculo": false,
+        "pessoa": {
+            "nome": "Marcelo Bepler", 
+            "documento": "24.277.121/0001-43", 
+            "telefone": "99123 4567"
+        }
+    },
+    {
+        "dataEntrada" : "2019-04-26T08:00:00",
+        "dataSaida":"2019-04-29T10:17:00",
+        "adicionalVeiculo": true,
+        "pessoa": {
+            "nome": "João Costa", 
+            "documento": "041.346.870-47", 
+            "telefone": "87456 7635"
+        }
+    },
+    {
+        "dataEntrada" : "2019-05-03T04:45:00",
+        "dataSaida":"2019-05-08T22:12:00",
+        "adicionalVeiculo": false,
+        "pessoa": {
+            "nome": "Paula da Silva", 
+            "documento": "067.177.470-05", 
+            "telefone": "46546 5783"
+        }
+    },
+    {
+        "dataEntrada" : "2019-05-18T10:25:00",
+        "dataSaida":"2019-05-27T15:17:00",
+        "adicionalVeiculo": false,
+        "pessoa": {
+            "nome": "Cristiano Moraes", 
+            "documento": "59.289.625/0001-68", 
+            "telefone": "99123 4573"
+        }
+    },
+    {
+        "dataEntrada" : "2019-05-24T15:50:00",
+        "dataSaida":"2019-05-29T18:17:00",
+        "adicionalVeiculo": true,
+        "pessoa": {
+            "nome": "Felipe Araujo", 
+            "documento": "406.729.450-61", 
+            "telefone": "46546 4578"
+        }
+    },
+    {
+        "dataEntrada" : "2019-05-31T19:00:00",
+        "dataSaida":"2019-06-02T20:17:00",
+        "adicionalVeiculo": false,
+        "pessoa": {
+            "nome": "Rui Barbosa", 
+            "documento": "149.246.170-91", 
+            "telefone": "465464 3533"
+        }
+    },
+    {
+        "dataEntrada" : "2019-06-03T02:00:00",
+        "dataSaida":"2019-06-04T10:28:00",
+        "adicionalVeiculo": true,
+        "pessoa": {
+            "nome": "Felipe Oliveria", 
+            "documento": "39.259.277/0001-79", 
+            "telefone": "4546 74564"
+        }
+    },
+    {
+        "dataEntrada" : "2019-06-06T05:55:00",
+        "dataSaida":"2019-06-10T20:17:00",
+        "adicionalVeiculo": false,
+        "pessoa": {
+            "nome": "Paulo Macedo", 
+            "documento": "20.623.971/0001-03", 
+            "telefone": "64564 4574"
+        }
+    }
+    ]
+}

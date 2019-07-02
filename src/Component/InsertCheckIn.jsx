@@ -7,6 +7,8 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row'
 import { connect }from 'react-redux';
 import "react-datepicker/dist/react-datepicker.css";
+import Select from 'react-select';
+
 
 import { setDateIn, setDateOut, setGuest, setParking,resetState} from '../Actions/InsertCheckInAction';
 
@@ -21,6 +23,7 @@ class InsertCheckIn extends Component{
     }
     
 	render() {
+        const { selectedOption } = this.state;
 		return (
 			<span>
                 <Row className="justify-content-center" >
@@ -42,7 +45,12 @@ class InsertCheckIn extends Component{
                             <div style={style.lines}>
                                 <div style={style.fields}>
                                     <Form.Label>Pessoa</Form.Label>
-                                    <Form.Control value={this.props.guest} type="text" placeholder="Nome" onChange={(value) => this.props.setGuest(value)}/>
+                                    <Select
+                                        value={this.props.guest}
+                                        options={this.props.options}
+                                        placeholder="Nome"
+                                        onChange={(value) => this.props.setGuest(value)}
+                                    />
                                 </div>
                                 <div style={style.fields}>
                                     <Form.Check checked={this.props.isParking} id={'possui_veiculo'} label={'Possui veículo'} style={style.checkbox} onChange={() => this.props.setParking(this.props.isParking)}/>
@@ -58,7 +66,6 @@ class InsertCheckIn extends Component{
 			
 		);
     }
-
 
     _insertCheckIn(){
         const { dateIn, dateOut, guest, isParking} = this.props;

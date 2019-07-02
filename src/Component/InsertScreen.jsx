@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form'
 import { connect }from 'react-redux';
 
+
 import { setDocument, setName, setPhone } from '../Actions/InsertGuestAction';
 
 class InsertScreen extends Component{
@@ -38,16 +39,20 @@ class InsertScreen extends Component{
     }
     
     _insertGuest(){
-        const { name, document, phone } = this.props;
-        this.props.insertGuest({ name, document, phone });
+        const { name, document, phone,label,value } = this.props;
+        this.props.insertGuest({ name, document, phone,label,value });
     }
+
+
 }
 
 const mapStateToProps = state => (
     {
         name: state.InsertGuestReducer.name ,
         document: state.InsertGuestReducer.document,
-        phone: state.InsertGuestReducer.phone
+        phone: state.InsertGuestReducer.phone,
+        label: state.InsertGuestReducer.label,
+        value: state.InsertGuestReducer.value
     }
 );
 

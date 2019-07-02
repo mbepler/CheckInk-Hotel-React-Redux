@@ -20,7 +20,7 @@ class Table extends React.Component{
         accessor: 'document'
     }, {
         Header: 'Valor Gasto (R$)',
-        accessor: 'phone'
+        accessor: 'total'
     }]
     return <ReactTable
         data={this.props.data}

@@ -11,35 +11,49 @@ import FormControl from 'react-bootstrap/FormControl'
 import Table from '../Component/Table'
 import InsertScreen from '../Component/InsertScreen'
 import InsertCheckIn from '../Component/InsertCheckIn'
+import initialData from '../static/InitialData/People.json'
+import initialCheckIn from '../static/InitialData/CheckIn.json'
 
-import {calculateValues, showInsertScreen, insertGuest, insertCheckIn ,closeInsertScreen,setFilter,setPresentFilter, setNotPresentFilter} from '../Actions/HomeAction';
+import {calculateValues, 
+	showInsertScreen, 
+	insertGuest, 
+	insertCheckIn ,
+	closeInsertScreen,
+	setFilter,
+	setPresentFilter, 
+	setNotPresentFilter,
+	loadInitialGuest,
+	loadInitialCheckIn} from '../Actions/HomeAction';
 import { connect }from 'react-redux';
 
 class Home extends React.Component{
 
 	constructor(props) {
 		super(props);
-		this._insertGuest = this._insertGuest.bind(this);
+		this.props.loadInitialGuest(initialData.People);
+		this.props.loadInitialCheckIn(initialCheckIn.CheckIn);
+		setTimeout(function(){ 
+			this.props.calculateValues(this.props);
+		}.bind(this), 100);
 		this._insertCheckIn = this._insertCheckIn.bind(this);
 		this._setFilter = this._setFilter.bind(this);
 		this._setNotPresentFilter = this._setNotPresentFilter.bind(this);
 		this._setPresentFilter = this._setPresentFilter.bind(this);
 		
-		
-		
+
 	  }
 
 	render() {
 		return (
 			<Container style={style.container}>
-				<InsertScreen show={this.props.showInsert} closeScreen = {this.props.closeInsertScreen} insertGuest = {this._insertGuest}></InsertScreen>
+				<InsertScreen show={this.props.showInsert} closeScreen = {this.props.closeInsertScreen} insertGuest = {this.props.insertGuest}></InsertScreen>
 				<div style={style.content}>
 					<span >
 						<div style={{marginLeft:'-15px'}}>
 							<Button onClick={() => this.props.showInsertScreen()} >Incluir Pessoa</Button>
 						</div>
 					</span>
-					<InsertCheckIn  insertCheckIn= {this._insertCheckIn}></InsertCheckIn>
+					<InsertCheckIn  insertCheckIn= {this._insertCheckIn} options={this.props.guests}></InsertCheckIn>
 					<span>
 					<Row className="justify-content-center" >
 						<Card style={style.card} >
@@ -56,7 +70,7 @@ class Home extends React.Component{
 									<Form.Check checked={this.props.notPresentFilter} label={'Pessoas que já deixaram o hotel'} style={{...style.checkbox, ...{'marginLeft':'1.25rem'}}} onChange={() => this._setNotPresentFilter(this.props.notPresentFilter)}/>
 								</div>
 								<div style={{paddingTop: '1.25rem'}}>
-									<Table data={this.props.guests}></Table>
+									<Table data={this.props.dataGrid}></Table>
 								</div>
 							</Card.Body>
 						</Card>
@@ -69,31 +83,35 @@ class Home extends React.Component{
 		);
 	}
 
-	_insertGuest(guest){
-    	this.props.insertGuest(guest);
-		this.props.calculateValues(this.props);
-	}
-
 	_insertCheckIn(checkIn){
-    	this.props.insertCheckIn(checkIn);
-		this.props.calculateValues(this.props);
+		this.props.insertCheckIn(checkIn);
+		setTimeout(function(){ 
+			this.props.calculateValues(this.props);
+		}.bind(this), 100);
 	}
 
 	_setFilter(filter){
     	this.props.setFilter(filter);
-		this.props.calculateValues(this.props);
+		setTimeout(function(){ 
+			this.props.calculateValues(this.props);
+		}.bind(this), 100);
+		console.log(this.props.dataGrid)
+		console.log(this.props.checkIns)
 	}
 
 	_setPresentFilter(filter){
     	this.props.setPresentFilter(filter);
-		this.props.calculateValues(this.props);
+		setTimeout(function(){ 
+			this.props.calculateValues(this.props);
+		}.bind(this), 100);
 	}
 
 	_setNotPresentFilter(filter){
     	this.props.setNotPresentFilter(filter);
-		this.props.calculateValues(this.props);
+		setTimeout(function(){ 
+			this.props.calculateValues(this.props);
+		}.bind(this), 100);
 	}
-	
 	
 
 }
@@ -144,7 +162,17 @@ const mapStateToProps = state => (
 		presentFilter: state.HomeReducer.presentFilter,
 		notPresentFilter: state.HomeReducer.notPresentFilter,
 		filter: state.HomeReducer.filter,
-		calculatedValues: state.HomeReducer.calculatedValues,
+		dataGrid: state.HomeReducer.dataGrid,
     }
 );
-export default connect(mapStateToProps,{ calculateValues:calculateValues, setNotPresentFilter:setNotPresentFilter, setPresentFilter:setPresentFilter, setFilter:setFilter,insertCheckIn: insertCheckIn, insertGuest: insertGuest, showInsertScreen: showInsertScreen ,closeInsertScreen:closeInsertScreen})(Home);
+export default connect(mapStateToProps,{ 
+	calculateValues:calculateValues, 
+	setNotPresentFilter:setNotPresentFilter, 
+	setPresentFilter:setPresentFilter, 
+	setFilter:setFilter,
+	insertCheckIn: insertCheckIn, 
+	insertGuest: insertGuest, 
+	showInsertScreen: showInsertScreen ,
+	closeInsertScreen:closeInsertScreen,
+	loadInitialGuest:loadInitialGuest,
+	loadInitialCheckIn:loadInitialCheckIn})(Home);

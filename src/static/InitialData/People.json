@@ -1,0 +1,36 @@
+{ "People" :   [
+    {
+    "nome": "Marcelo Bepler", 
+    "documento": "24.277.121/0001-43", 
+    "telefone": "99123 4567"
+    },
+    {
+    "nome": "João Costa", 
+    "documento": "041.346.870-47", 
+    "telefone": "87456 7635"
+    },{
+    "nome": "Paula da Silva", 
+    "documento": "067.177.470-05", 
+    "telefone": "46546 5783"
+    },{
+    "nome": "Cristiano Moraes", 
+    "documento": "59.289.625/0001-68", 
+    "telefone": "99123 4573"
+    },{
+    "nome": "Felipe Araujo", 
+    "documento": "406.729.450-61", 
+    "telefone": "46546 4578"
+    },{
+    "nome": "Rui Barbosa", 
+    "documento": "149.246.170-91", 
+    "telefone": "465464 3533"
+    },{
+    "nome": "Felipe Oliveria", 
+    "documento": "39.259.277/0001-79", 
+    "telefone": "4546 74564"
+    },{
+    "nome": "Paulo Macedo", 
+    "documento": "20.623.971/0001-03", 
+    "telefone": "64564 4574"
+    }]
+}

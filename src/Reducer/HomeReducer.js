@@ -5,7 +5,7 @@ const INITIAL_STATE = {
     filter: '',
     guests : [],
     checkIns: [],
-    calculatedValues:[]
+    dataGrid:[]
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -23,7 +23,11 @@ export default (state = INITIAL_STATE, action) => {
         case 'SET_NOT_PRESENT_FILTER':
             return { ...state, notPresentFilter: action.payload };
         case 'CALCULATE_VALUES':
-            return { ...state, calculatedValues: [...state.calculatedValues, action.payload] };
+            return { ...state, dataGrid:  action.payload };
+        case 'INSERT_INITIAL_GUEST':
+            return { ...state, guests:action.payload};
+        case 'INSERT_INITIAL_CHECKIN':
+            return { ...state, checkIns: action.payload  };
         default:
             return state;
 
