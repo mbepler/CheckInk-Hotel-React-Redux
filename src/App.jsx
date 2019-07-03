@@ -14,7 +14,7 @@ export default class App extends React.Component {
 		return (
 			<Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))} >
 				<div id="root" style={style.root}>
-					
+					<Header />
 					<Routes/>
 				</div>
 			</Provider>
