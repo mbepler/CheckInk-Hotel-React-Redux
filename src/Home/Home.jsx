@@ -2,14 +2,17 @@ import React from 'react'
 
 
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import InputGroup from 'react-bootstrap/InputGroup'
+import Dropdown from 'react-bootstrap/Dropdown'
+import DropdownButton from 'react-bootstrap/DropdownButton'
 import FormControl from 'react-bootstrap/FormControl'
 import Table from '../Component/Table'
 import InsertScreen from '../Component/InsertScreen'
+import UpdateScreen from '../Component/UpdateScreen'
+import DeleteScreen from '../Component/DeleteScreen'
 import InsertCheckIn from '../Component/InsertCheckIn'
 import initialData from '../static/InitialData/People.json'
 import initialCheckIn from '../static/InitialData/CheckIn.json'
@@ -22,16 +25,20 @@ import {calculateValues,
 	setFilter,
 	setPresentFilter, 
 	setNotPresentFilter,
-	loadInitialGuest,
-	loadInitialCheckIn} from '../Actions/HomeAction';
+	loadInitialData,
+	showUpdateScreen,
+	closeUpdateScreen,
+	updateGuest,
+	showDeleteScreen,
+	closeDeleteScreen,
+	deleteGuest} from '../Actions/HomeAction';
 import { connect }from 'react-redux';
 
 class Home extends React.Component{
 
 	constructor(props) {
 		super(props);
-		this.props.loadInitialGuest(initialData.People);
-		this.props.loadInitialCheckIn(initialCheckIn.CheckIn);
+		this.props.loadInitialData(initialData.People, initialCheckIn.CheckIn);
 		setTimeout(function(){ 
 			this.props.calculateValues(this.props);
 		}.bind(this), 100);
@@ -39,6 +46,9 @@ class Home extends React.Component{
 		this._setFilter = this._setFilter.bind(this);
 		this._setNotPresentFilter = this._setNotPresentFilter.bind(this);
 		this._setPresentFilter = this._setPresentFilter.bind(this);
+		this._updateGuest = this._updateGuest.bind(this);
+		this._deleteGuest = this._deleteGuest.bind(this);
+		
 		
 
 	  }
@@ -47,13 +57,19 @@ class Home extends React.Component{
 		return (
 			<Container style={style.container}>
 				<InsertScreen show={this.props.showInsert} closeScreen = {this.props.closeInsertScreen} insertGuest = {this.props.insertGuest}></InsertScreen>
+				<UpdateScreen show={this.props.showUpdate} closeScreen = {this.props.closeUpdateScreen} updateGuest = {this._updateGuest} options={this.props.hotelRegistration}></UpdateScreen>
+				<DeleteScreen show={this.props.showDelete} closeScreen = {this.props.closeDeleteScreen} deleteGuest = {this._deleteGuest} options={this.props.hotelRegistration}></DeleteScreen>
 				<div style={style.content}>
 					<span >
 						<div style={{marginLeft:'-15px'}}>
-							<Button onClick={() => this.props.showInsertScreen()} >Incluir Pessoa</Button>
+						<DropdownButton id="dropdown-basic-button" title="Gerenciar hóspedes">
+							<Dropdown.Item onClick={() => this.props.showInsertScreen()} >Incluir Pessoa</Dropdown.Item>
+							<Dropdown.Item onClick={() => this.props.showUpdateScreen()} >Alterar Pessoa</Dropdown.Item>
+							<Dropdown.Item onClick={() => this.props.showDeleteScreen()} >Excluir Pessoa</Dropdown.Item>
+						</DropdownButton>
 						</div>
 					</span>
-					<InsertCheckIn  insertCheckIn= {this._insertCheckIn} options={this.props.guests}></InsertCheckIn>
+					<InsertCheckIn  insertCheckIn= {this._insertCheckIn} options={this.props.hotelRegistration}></InsertCheckIn>
 					<span>
 					<Row className="justify-content-center" >
 						<Card style={style.card} >
@@ -83,8 +99,23 @@ class Home extends React.Component{
 		);
 	}
 
+	_deleteGuest(guest){
+		this.props.deleteGuest(guest, this.props.hotelRegistration);
+		setTimeout(function(){ 
+			this.props.calculateValues(this.props);
+		}.bind(this), 100);
+	}
+
+	_updateGuest(updatedGuest){
+		this.props.updateGuest(updatedGuest, this.props.hotelRegistration);
+		setTimeout(function(){ 
+			this.props.calculateValues(this.props);
+		}.bind(this), 100);
+	}
+
+
 	_insertCheckIn(checkIn){
-		this.props.insertCheckIn(checkIn);
+		this.props.insertCheckIn(checkIn, this.props.hotelRegistration);
 		setTimeout(function(){ 
 			this.props.calculateValues(this.props);
 		}.bind(this), 100);
@@ -95,8 +126,6 @@ class Home extends React.Component{
 		setTimeout(function(){ 
 			this.props.calculateValues(this.props);
 		}.bind(this), 100);
-		console.log(this.props.dataGrid)
-		console.log(this.props.checkIns)
 	}
 
 	_setPresentFilter(filter){
@@ -156,13 +185,14 @@ const style = {
 
 const mapStateToProps = state => (
     {
-        showInsert: state.HomeReducer.showInsert ,
-        guests: state.HomeReducer.guests,
-		checkIns: state.HomeReducer.checkIns,
+		showInsert: state.HomeReducer.showInsert ,
+		showUpdate: state.HomeReducer.showUpdate ,
+		showDelete: state.HomeReducer.showDelete ,
 		presentFilter: state.HomeReducer.presentFilter,
 		notPresentFilter: state.HomeReducer.notPresentFilter,
 		filter: state.HomeReducer.filter,
 		dataGrid: state.HomeReducer.dataGrid,
+		hotelRegistration: state.HomeReducer.hotelRegistration
     }
 );
 export default connect(mapStateToProps,{ 
@@ -172,7 +202,13 @@ export default connect(mapStateToProps,{
 	setFilter:setFilter,
 	insertCheckIn: insertCheckIn, 
 	insertGuest: insertGuest, 
+	updateGuest: updateGuest, 
 	showInsertScreen: showInsertScreen ,
 	closeInsertScreen:closeInsertScreen,
-	loadInitialGuest:loadInitialGuest,
-	loadInitialCheckIn:loadInitialCheckIn})(Home);
+	loadInitialData:loadInitialData,
+	showUpdateScreen:showUpdateScreen,
+	closeUpdateScreen:closeUpdateScreen,
+	showDeleteScreen:showDeleteScreen,
+	closeDeleteScreen:closeDeleteScreen,
+	deleteGuest:deleteGuest
+})(Home);

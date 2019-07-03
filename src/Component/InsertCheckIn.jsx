@@ -15,15 +15,25 @@ import { setDateIn, setDateOut, setGuest, setParking,resetState} from '../Action
 class InsertCheckIn extends Component{
 
     constructor(props) {
-		super(props);
+        super(props);
 		this.state = {
 			startDate: new Date(),
-			endDate: new Date()
+            endDate: new Date(),
+            people:[]
 		}
     }
+
+    shouldComponentUpdate(nextProps, nextState){
+        var guests = [];
+        for(var index in nextProps.options){
+            guests.push(nextProps.options[index].guest);
+        }
+        this.state.people = guests.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+        return !((this.props == nextProps) &&(this.state == nextState))
+    }
+
     
 	render() {
-        const { selectedOption } = this.state;
 		return (
 			<span>
                 <Row className="justify-content-center" >
@@ -46,8 +56,9 @@ class InsertCheckIn extends Component{
                                 <div style={style.fields}>
                                     <Form.Label>Pessoa</Form.Label>
                                     <Select
+                                        isClearable
                                         value={this.props.guest}
-                                        options={this.props.options}
+                                        options={this.state.people}
                                         placeholder="Nome"
                                         onChange={(value) => this.props.setGuest(value)}
                                     />

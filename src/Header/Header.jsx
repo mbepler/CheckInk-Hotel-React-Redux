@@ -15,10 +15,6 @@ const style = {
 }
 
 class Header extends React.Component { 
-	constructor() {
-		super();
-	}
-
 	render() {
 		return (
 			<Navbar variant="dark"  style={style.header}>

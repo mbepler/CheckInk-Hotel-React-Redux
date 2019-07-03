@@ -40,7 +40,7 @@ class InsertScreen extends Component{
     
     _insertGuest(){
         const { name, document, phone,label,value } = this.props;
-        this.props.insertGuest({ name, document, phone,label,value });
+        this.props.insertGuest({ name, document, phone,label,value }, this.props.hotelRegistration);
     }
 
 
@@ -52,7 +52,8 @@ const mapStateToProps = state => (
         document: state.InsertGuestReducer.document,
         phone: state.InsertGuestReducer.phone,
         label: state.InsertGuestReducer.label,
-        value: state.InsertGuestReducer.value
+        value: state.InsertGuestReducer.value,
+        hotelRegistration: state.HomeReducer.hotelRegistration
     }
 );
 

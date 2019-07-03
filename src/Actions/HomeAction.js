@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 export const showInsertScreen = () => {
     return {
         type: 'SHOW_INSERT',
@@ -14,31 +12,118 @@ export const closeInsertScreen = () => {
     }
 }
 
-
-export const insertGuest = (guest) => {
-        if(guest.name && guest.document && guest.phone){
-            return {
-                type: 'INSERT_GUEST',
-                payload: guest
-            }
-        }else{
-            alert('Campos obrigatórios não preenchidos')
-        }
-
+export const showDeleteScreen = () => {
+    return {
+        type: 'SHOW_DELETE',
+        payload: true
+    }
 }
 
+export const closeDeleteScreen = () => {
+    return {
+        type: 'SHOW_DELETE',
+        payload: false
+    }
+}
 
-export const insertCheckIn= (checkIn) => {
-    if(checkIn.dateIn > checkIn.dateOut){
-        alert('Data de entrada menor que data de saída')
-    }else if(checkIn.dateIn && checkIn.dateOut && checkIn.guest){
+export const showUpdateScreen = () => {
+    return {
+        type: 'SHOW_UPDATE',
+        payload: true
+    }
+}
+
+export const closeUpdateScreen = () => {
+    return {
+        type: 'SHOW_UPDATE',
+        payload: false
+    }
+}
+
+export const deleteGuest = (deleteGuest , hotelRegistration) => {
+    for(var index in hotelRegistration){
+        if(hotelRegistration[index].guest === deleteGuest){
+            hotelRegistration.splice(index, 1); 
+        }
+    }
+    return {
+        type: 'DELETE_GUEST',
+        payload: hotelRegistration
+    }
+}
+export const updateGuest = (updatedGuest, hotelRegistration) => {
+    if(updatedGuest.name && updatedGuest.document && updatedGuest.phone && updatedGuest.person){
+        for(var index in hotelRegistration){
+            if(hotelRegistration[index].guest === updatedGuest.person){
+                var updated = {
+                    name: updatedGuest.name,
+                    label: updatedGuest.name,
+                    value: updatedGuest.document,
+                    document: updatedGuest.document,
+                    phone: updatedGuest.phone,
+                }
+                hotelRegistration[index].guest = updated;
+            }
+        }
         return {
-            type: 'INSERT_CHECK_IN',
-            payload: checkIn
+            type: 'UPDATE_GUEST',
+            payload: hotelRegistration
         }
     }else{
         alert('Campos obrigatórios não preenchidos')
     }
+    return{type:'ERROR'};
+
+}
+
+export const insertGuest = (guest, hotelRegistration) => {
+        if(guest.name && guest.document && guest.phone){
+            var isDuplicated = hotelRegistration.find(register => register.guest.document === guest.document);
+            if(isDuplicated){
+                alert('Hóspede com esse documento já cadastrado');
+                return{type:'ERROR'};
+            }
+            var newRegister = {
+                guest:guest,
+                checkIn:[]
+            }
+            if(hotelRegistration){
+                hotelRegistration = [...hotelRegistration, newRegister];
+            }else{
+                hotelRegistration = [newRegister];
+            }
+            return {
+                type: 'INSERT_GUEST',
+                payload: hotelRegistration
+            }
+        }else{
+            alert('Campos obrigatórios não preenchidos')
+        }
+        return{type:'ERROR'};
+
+}
+
+
+export const insertCheckIn= (checkIn, hotelRegistration) => {
+    if(checkIn.dateIn > checkIn.dateOut){
+        alert('Data de entrada menor que data de saída')
+    }else if(checkIn.dateIn && checkIn.dateOut && checkIn.guest){
+        var register = hotelRegistration.find(data => data.guest === checkIn.guest);
+        var newCheckIn = {
+            dateIn: checkIn.dateIn,
+            dateOut: checkIn.dateOut,
+            isParking: checkIn.isParking
+        }
+        register.checkIn.push(newCheckIn);
+    
+        return {
+            type: 'INSERT_NEW_CHECKIN',
+            payload: hotelRegistration
+        }
+    }else{
+        alert('Campos obrigatórios não preenchidos')
+    }
+    return{type:'ERROR'};
 }
 
 export const setFilter = (filter) => {
@@ -64,21 +149,18 @@ export const setNotPresentFilter = (value) => {
 
 
 
-export const calculateValues = (value) => {
-    if(value.checkIns){ 
-        var grouped = _.groupBy(value.checkIns, function(data) {
-            return data.guest.name;
-        });
-        var filterList = filterListGuests(grouped,value)
+export const calculateValues = (props) => {
+    if(props.hotelRegistration){ 
+        var filterList = filterListGuests(props)
         var dataGrid = []; 
         for(var index in filterList){
-            var clientCheckIn= filterList[index];
+            var register= filterList[index];
             var total = 0.00;
-            for(var index2 in clientCheckIn){
-                var check= clientCheckIn[index2];
-                total += getTotalHotel(check)
+            for(var index2 in register.checkIn){
+                var checkIn= register.checkIn[index2];
+                total += getTotalHotel(checkIn)
             }
-            dataGrid = [...dataGrid, getDataGrid(check,total)]
+            dataGrid = [...dataGrid, getDataGrid(register.guest,total)]
         }
         return {
             type: 'CALCULATE_VALUES',
@@ -155,25 +237,26 @@ function getBusinessDatesCount(startDate, endDate) {
     return infoData;
 }
 
-function getDataGrid(check, total){
+function getDataGrid(guest, total){
     var formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
     });
     var data = {};
-    data.name = check.guest.name;
-    data.document = check.guest.document;
+    data.name = guest.name;
+    data.document = guest.document;
     data.total = formatter.format(total);
     return data;
 }
 
-function filterListGuests (dataGrouped, props){
+function filterListGuests (props){
     var list = [];
-    for(var index in dataGrouped){
-        var clientCheckIn= dataGrouped[index];
-        var guestName = clientCheckIn[0].guest.name;
-        var guestDocument = clientCheckIn[0].guest.document;
-        var isInHotel = clientIsInHotel(clientCheckIn);
+    var hotelRegistration = props.hotelRegistration;
+    for(var index in hotelRegistration){
+        var register= hotelRegistration[index];
+        var guestName = register.guest.name;
+        var guestDocument = register.guest.document;
+        var isInHotel = clientIsInHotel(register);
         if(!((props.notPresentFilter && !isInHotel) || (props.presentFilter && isInHotel))) {
             continue;
         }
@@ -182,18 +265,18 @@ function filterListGuests (dataGrouped, props){
             && !guestDocument.toUpperCase().includes(props.filter.toUpperCase())) ){
             continue;
         }
-        list.push(clientCheckIn)   
+        list.push(register)   
     }
     return list;
 }
 
 
 
-function clientIsInHotel(clientCheckIn) {
+function clientIsInHotel(register) {
     var today = new Date();
     var isInHotel = false;
-    for(var index in clientCheckIn){
-        var checkInClient = clientCheckIn[index];
+    for(var index in register.checkIn){
+        var checkInClient = register.checkIn[index];
         if(checkInClient.dateIn <= today && checkInClient.dateOut >= today ){
             isInHotel = true;
             break;
@@ -203,45 +286,27 @@ function clientIsInHotel(clientCheckIn) {
 }
 
 
-export const loadInitialGuest = (jsonObject) => {
-    var guestList = [];
-    for(var index in jsonObject){
-        var person = jsonObject[index];
+export const loadInitialData = (guests, checkIns) => {
+    var hotelRegistration = [];
+    for(var index in guests){
+        var person = guests[index];
         var guest = {};
         guest.name = person.nome;
         guest.label = person.nome;
-        guest.value = person.nome;
+        guest.value = person.documento;
         guest.document = person.documento;
         guest.phone = person.telefone;
-        guestList = [...guestList, guest];
+        var newCheckIn = checkIns.find(data => data.pessoa.documento === guest.document);
+        var checkIn = {
+            dateIn:  new Date(newCheckIn.dataEntrada),
+            dateOut:  new Date(newCheckIn.dataSaida),
+            isParking: newCheckIn.adicionalVeiculo
+        }
+        hotelRegistration.push({guest:guest,checkIn:[checkIn]});
     }
     return {
-        type: 'INSERT_INITIAL_GUEST',
-        payload: guestList
+        type: 'INSERT_INITIAL_DATA',
+        payload: hotelRegistration
     }
 }
 
-export const loadInitialCheckIn = (jsonObject) => {
-    var checkInList = [];
-    for(var index in jsonObject){
-        var checkIn = {};
-        var checkInInitial = jsonObject[index];
-        checkIn.dateIn = new Date(checkInInitial.dataEntrada);
-        checkIn.dateOut = new Date(checkInInitial.dataSaida);
-        checkIn.isParking = checkInInitial.adicionalVeiculo;
-        var person = checkInInitial.pessoa;
-        var guest = {};
-        guest.name = person.nome;
-        guest.label = person.nome;
-        guest.value = person.nome;
-        guest.document = person.documento;
-        guest.phone = person.telefone;
-        checkIn.guest = guest;
-
-        checkInList = [...checkInList, checkIn];
-    }
-    return {
-        type: 'INSERT_INITIAL_CHECKIN',
-        payload: checkInList
-    }
-}
