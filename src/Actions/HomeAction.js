@@ -41,18 +41,15 @@ export const closeUpdateScreen = () => {
 }
 
 export const deleteGuest = (deleteGuest , hotelRegistration) => {
-    for(var index in hotelRegistration){
-        if(hotelRegistration[index].guest === deleteGuest){
-            hotelRegistration.splice(index, 1); 
-        }
-    }
+    var newHotelRegistration = hotelRegistration.filter(hotelBook => hotelBook.guest !== deleteGuest)
     return {
         type: 'DELETE_GUEST',
-        payload: hotelRegistration
+        payload: newHotelRegistration
     }
 }
 export const updateGuest = (updatedGuest, hotelRegistration) => {
     if(updatedGuest.name && updatedGuest.document && updatedGuest.phone && updatedGuest.person){
+
         for(var index in hotelRegistration){
             if(hotelRegistration[index].guest === updatedGuest.person){
                 var updated = {
@@ -63,11 +60,12 @@ export const updateGuest = (updatedGuest, hotelRegistration) => {
                     phone: updatedGuest.phone,
                 }
                 hotelRegistration[index].guest = updated;
+                var edit = [...hotelRegistration];
             }
         }
         return {
             type: 'UPDATE_GUEST',
-            payload: hotelRegistration
+            payload: edit
         }
     }else{
         alert('Campos obrigatórios não preenchidos')

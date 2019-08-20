@@ -38,19 +38,7 @@ class Home extends React.Component{
 
 	constructor(props) {
 		super(props);
-		this.props.loadInitialData(initialData.People, initialCheckIn.CheckIn);
-		setTimeout(function(){ 
-			this.props.calculateValues(this.props);
-		}.bind(this), 100);
-		this._insertCheckIn = this._insertCheckIn.bind(this);
-		this._setFilter = this._setFilter.bind(this);
-		this._setNotPresentFilter = this._setNotPresentFilter.bind(this);
-		this._setPresentFilter = this._setPresentFilter.bind(this);
-		this._updateGuest = this._updateGuest.bind(this);
-		this._deleteGuest = this._deleteGuest.bind(this);
-		
-		
-
+		this._init();
 	  }
 
 	render() {
@@ -97,6 +85,19 @@ class Home extends React.Component{
 			</Container>
 			
 		);
+	}
+
+	_init(){
+		this.props.loadInitialData(initialData.People, initialCheckIn.CheckIn);
+		setTimeout(function(){ 
+			this.props.calculateValues(this.props);
+		}.bind(this), 100);
+		this._insertCheckIn = this._insertCheckIn.bind(this);
+		this._setFilter = this._setFilter.bind(this);
+		this._setNotPresentFilter = this._setNotPresentFilter.bind(this);
+		this._setPresentFilter = this._setPresentFilter.bind(this);
+		this._updateGuest = this._updateGuest.bind(this);
+		this._deleteGuest = this._deleteGuest.bind(this);
 	}
 
 	_deleteGuest(guest){
