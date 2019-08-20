@@ -38,37 +38,37 @@ class InsertCheckIn extends Component{
 			<span>
                 <Row className="justify-content-center" >
                     <Card style={style.card} >
-                        <Card.Header style={style.cardHeader }>Novo Check-In</ Card.Header>
+                        <Card.Header style={style.cardHeader }>New Check-In</ Card.Header>
                         <Card.Body style={style.container}>
                             <div style={style.lines}>
                                 <div style={style.fields}>
-                                    <Card.Text>Data/hora de entrada</Card.Text>
+                                    <Card.Text>Date/Time Check-In</Card.Text>
                                     <DatePicker  selected={this.props.dateIn}  onChange={(value) => this.props.setDateIn(value)} dateFormat="dd/MM/yyyy HH:mm"
                                     showTimeSelect	timeFormat="HH:mm"/>
                                 </div>
                                 <div style={style.fields}>
-                                    <Card.Text>Data/hora de saída</Card.Text>
+                                    <Card.Text>Date/Time Check-Out</Card.Text>
                                     <DatePicker  selected={this.props.dateOut}  onChange={(value) => this.props.setDateOut(value)} dateFormat="dd/MM/yyyy HH:mm"
                                     showTimeSelect	timeFormat="HH:mm"/>
                                 </div>
                             </div>
                             <div style={style.lines}>
                                 <div style={style.fields}>
-                                    <Form.Label>Pessoa</Form.Label>
+                                    <Form.Label>Person</Form.Label>
                                     <Select
                                         isClearable
                                         value={this.props.guest}
                                         options={this.state.people}
-                                        placeholder="Nome"
+                                        placeholder="Name"
                                         onChange={(value) => this.props.setGuest(value)}
                                     />
                                 </div>
                                 <div style={style.fields}>
-                                    <Form.Check checked={this.props.isParking} id={'possui_veiculo'} label={'Possui veículo'} style={style.checkbox} onChange={() => this.props.setParking(this.props.isParking)}/>
+                                    <Form.Check checked={this.props.isParking} id={'possui_veiculo'} label={'Parking Lot'} style={style.checkbox} onChange={() => this.props.setParking(this.props.isParking)}/>
                                 </div>
                             </div>
                             <div style={style.lines}>
-                                <Button onClick={() => this._insertCheckIn()}>Salvar</Button>
+                                <Button onClick={() => this._insertCheckIn()}>Save</Button>
                             </div>
                         </Card.Body>
                     </Card>

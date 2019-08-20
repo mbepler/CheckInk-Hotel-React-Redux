@@ -17,21 +17,21 @@ class InsertScreen extends Component{
             aria-labelledby="contained-modal-title-vcenter"
             centered>
             <Modal.Header closeButton>
-                <Modal.Title>Incluir Pessoa</Modal.Title>
+                <Modal.Title>Insert Guest</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
-                <Form.Label>Pessoa</Form.Label>
-   				<Form.Control type="text" placeholder="Nome" onChange={(value) => this.props.setName(value)}/>
-                <Form.Label>Documento</Form.Label>
-   				<Form.Control type="text" placeholder="Documento" onChange={(value) => this.props.setDocument(value)}/>
-                <Form.Label>Telefone</Form.Label>
-   				<Form.Control type="text" placeholder="Telefone" onChange={(value) => this.props.setPhone(value)}/>
+                <Form.Label>Name</Form.Label>
+   				<Form.Control type="text" placeholder="Name" onChange={(value) => this.props.setName(value)}/>
+                <Form.Label>Document</Form.Label>
+   				<Form.Control type="text" placeholder="Document" onChange={(value) => this.props.setDocument(value)}/>
+                <Form.Label>Phone</Form.Label>
+   				<Form.Control type="text" placeholder="Phone" onChange={(value) => this.props.setPhone(value)}/>
             </Modal.Body>
 
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => this.props.closeScreen()}>Fechar</Button>
-                <Button variant="primary" onClick={() => this._insertGuest()} >Incluir</Button>
+                <Button variant="secondary" onClick={() => this.props.closeScreen()}>Close</Button>
+                <Button variant="primary" onClick={() => this._insertGuest()} >Insert</Button>
             </Modal.Footer>
             </Modal>
 			

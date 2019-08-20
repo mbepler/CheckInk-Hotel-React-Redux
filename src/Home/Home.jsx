@@ -62,10 +62,10 @@ class Home extends React.Component{
 				<div style={style.content}>
 					<span >
 						<div style={{marginLeft:'-15px'}}>
-						<DropdownButton id="dropdown-basic-button" title="Gerenciar hóspedes">
-							<Dropdown.Item onClick={() => this.props.showInsertScreen()} >Incluir Pessoa</Dropdown.Item>
-							<Dropdown.Item onClick={() => this.props.showUpdateScreen()} >Alterar Pessoa</Dropdown.Item>
-							<Dropdown.Item onClick={() => this.props.showDeleteScreen()} >Excluir Pessoa</Dropdown.Item>
+						<DropdownButton id="dropdown-basic-button" title="Manage Guests">
+							<Dropdown.Item onClick={() => this.props.showInsertScreen()} >Insert Guest</Dropdown.Item>
+							<Dropdown.Item onClick={() => this.props.showUpdateScreen()} >Update Guest</Dropdown.Item>
+							<Dropdown.Item onClick={() => this.props.showDeleteScreen()} >Delete Guest</Dropdown.Item>
 						</DropdownButton>
 						</div>
 					</span>
@@ -73,17 +73,17 @@ class Home extends React.Component{
 					<span>
 					<Row className="justify-content-center" >
 						<Card style={style.card} >
-							<Card.Header style={style.cardHeader }>Consultas</ Card.Header>
+							<Card.Header style={style.cardHeader }>Board</ Card.Header>
 							<Card.Body style={style.container}>
 								<div style={style.lines}>
 										<InputGroup.Prepend>
-										<InputGroup.Text id="filtro" >Filtrar por:</InputGroup.Text>
+										<InputGroup.Text id="filtro" >Find by:</InputGroup.Text>
 										</InputGroup.Prepend>
 										<FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" onChange={(value) => this._setFilter(value)} />
 								</div>
 								<div style={{display: 'flex'}}>
-									<Form.Check checked={this.props.presentFilter} label={'Pessoas ainda presentes'} style={style.checkbox} onChange={() => this._setPresentFilter(this.props.presentFilter)}/>
-									<Form.Check checked={this.props.notPresentFilter} label={'Pessoas que já deixaram o hotel'} style={{...style.checkbox, ...{'marginLeft':'1.25rem'}}} onChange={() => this._setNotPresentFilter(this.props.notPresentFilter)}/>
+									<Form.Check checked={this.props.presentFilter} label={'Guests at hotel'} style={style.checkbox} onChange={() => this._setPresentFilter(this.props.presentFilter)}/>
+									<Form.Check checked={this.props.notPresentFilter} label={'Guests who have left the hotel'} style={{...style.checkbox, ...{'marginLeft':'1.25rem'}}} onChange={() => this._setNotPresentFilter(this.props.notPresentFilter)}/>
 								</div>
 								<div style={{paddingTop: '1.25rem'}}>
 									<Table data={this.props.dataGrid}></Table>

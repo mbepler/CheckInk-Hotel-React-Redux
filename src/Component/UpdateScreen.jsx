@@ -34,29 +34,29 @@ class UpdateScreen extends Component{
             aria-labelledby="contained-modal-title-vcenter"
             centered>
             <Modal.Header closeButton>
-                <Modal.Title>Alterar Pessoa</Modal.Title>
+                <Modal.Title>Update guest</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
-                <Form.Label>Pessoa a ser alterada:</Form.Label>
+                <Form.Label>Choose guest to be updated:</Form.Label>
                 <Select
                     isClearable
                     value={this.props.guest}
                     options={this.state.people}
-                    placeholder="Escolha a pessoa a ser alterada"
+                    placeholder="Choose guest to be updated"
                     onChange={(value) => this.props.setPerson(value)}
                 />
-                <Form.Label>Pessoa</Form.Label>
-   				<Form.Control disabled={this.props.disableFields} type="text" placeholder="Nome" onChange={(value) => this.props.setName(value)} value={this.props.name}/>
-                <Form.Label>Documento</Form.Label>
-   				<Form.Control disabled={this.props.disableFields} type="text" placeholder="Documento" onChange={(value) => this.props.setDocument(value)} value={this.props.document}/>
-                <Form.Label>Telefone</Form.Label>
-   				<Form.Control disabled={this.props.disableFields} type="text" placeholder="Telefone" onChange={(value) => this.props.setPhone(value)} value={this.props.phone}/>
+                <Form.Label>Guest</Form.Label>
+   				<Form.Control disabled={this.props.disableFields} type="text" placeholder="Name" onChange={(value) => this.props.setName(value)} value={this.props.name}/>
+                <Form.Label>Document</Form.Label>
+   				<Form.Control disabled={this.props.disableFields} type="text" placeholder="Document" onChange={(value) => this.props.setDocument(value)} value={this.props.document}/>
+                <Form.Label>Phone</Form.Label>
+   				<Form.Control disabled={this.props.disableFields} type="text" placeholder="Phone" onChange={(value) => this.props.setPhone(value)} value={this.props.phone}/>
             </Modal.Body>
 
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => this.props.closeScreen()}>Fechar</Button>
-                <Button variant="primary" onClick={() => this._updateGuest()} >Alterar</Button>
+                <Button variant="secondary" onClick={() => this.props.closeScreen()}>Close</Button>
+                <Button variant="primary" onClick={() => this._updateGuest()} >Update</Button>
             </Modal.Footer>
             </Modal>
 			

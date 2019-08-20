@@ -34,22 +34,22 @@ class DeleteScreen extends Component{
             aria-labelledby="contained-modal-title-vcenter"
             centered>
             <Modal.Header closeButton>
-                <Modal.Title>Excluir Pessoa</Modal.Title>
+                <Modal.Title>Delete Guest</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
-                <Form.Label>Pessoa</Form.Label>
+                <Form.Label>Guest</Form.Label>
                 <Select
                     isClearable
                     value={this.props.guest}
                     options={this.state.people}
-                    placeholder="Escolha a pessoa a ser alterada"
+                    placeholder="Choose a guest to delete"
                     onChange={(value) => this.props.setPerson(value)}
                 /> </Modal.Body>
 
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => this.props.closeScreen()}>Fechar</Button>
-                <Button variant="primary" onClick={() => this._deleteGuest()} >Excluir</Button>
+                <Button variant="secondary" onClick={() => this.props.closeScreen()}>Close</Button>
+                <Button variant="primary" onClick={() => this._deleteGuest()} >Delete</Button>
             </Modal.Footer>
             </Modal>
 			
