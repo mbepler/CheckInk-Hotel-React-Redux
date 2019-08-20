@@ -1,4 +1,4 @@
-import React from 'react'
+ 	import React from 'react'
 
 import Navbar from 'react-bootstrap/Navbar';
 
@@ -9,8 +9,8 @@ const style = {
 	},
 
 	headerImg: {
-		width: "8rem",
-		height: "8rem"
+		width: "10rem",
+		height: "4rem"
 	}
 }
 
@@ -18,10 +18,10 @@ class Header extends React.Component {
 	render() {
 		return (
 			<Navbar variant="dark"  style={style.header}>
-				<Navbar.Brand href="/">
+				<Navbar.Brand href="https://github.com/mbepler">
 					<img
-						alt=""
-						src="https://www.senior.com.br/wp-content/themes/senior-2016/images/logo-desktop.svg"
+						alt="my_github"
+						src="https://miro.medium.com/max/1170/1*zvwgIycD5ePCTv1fUNdeJg.png" 
 						className="d-inline-block align-top"
 						style={style.headerImg}
 					/>
