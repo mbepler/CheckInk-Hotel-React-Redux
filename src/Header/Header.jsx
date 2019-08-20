@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 const style = {
 	header: {
 		height: "10%",
-		backgroundColor: "#008267"
+		backgroundColor: "rgb(26, 115, 232)"
 	},
 
 	headerImg: {

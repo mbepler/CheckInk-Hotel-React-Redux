@@ -7,13 +7,13 @@ import 'react-table/react-table.css'
 class Table extends React.Component{
     render() {
     const columns = [{
-        Header: 'Nome',
+        Header: 'Name',
         accessor: 'name' // String-based value accessors!
     }, {
-        Header: 'Documento',
+        Header: 'Document',
         accessor: 'document'
     }, {
-        Header: 'Valor Gasto (R$)',
+        Header: 'Amount Spent ($)',
         accessor: 'total'
     }]
     return <ReactTable
